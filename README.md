@@ -2,39 +2,69 @@
 
 ## Purpose
 
-This utility is intended to provide an example implementation of an auth utility that utilizes Permit.io. This README
-includes a sample role matrix and the matching Terraform output as an example. To adapt it, add role matrices to
-Roles.md, and use a coding assistant (e.g., Copilot) to generate the corresponding Terraform (steps to use Terraform
-listed below) based on the provided examples. If helpful, add README.md, Roles.md, and Roles.tf, to your Copilot
-context. Here's an example prompt (assumes agentic mode):
+This utility provides an example implementation of an auth utility that integrates
+with [Permit.io](https://permit.io).  
+The README includes:
+
+- A **sample role matrix**
+- The **matching Terraform output** for Permit.io
+
+You can adapt this by:
+
+1. Creating a `Roles.md` file with your actual role matrix.
+2. Using a coding assistant (e.g., Copilot) to generate matching Terraform based on the provided example.
+3. Optionally adding `README.md`, `Roles.md`, and `Roles.tf` to your Copilot context.
+
+**Example Copilot prompt** (assumes *agentic mode* where Copilot can read/write files):
 
 ```text
-Read the sample role matrix and matching Permit.io Terraform code in README.md.  
-Read the actual role matrix in Roles.md.  
-Generate Terraform code for Permit.io that matches the example’s format, naming conventions, and resource structure, then write it to Roles.tf.
-Abort if there are issues parsing the roles from Roles.md.
+Read the sample role matrix and matching Permit.io Terraform code in README.md.
+Read the actual role matrix in Roles.md.
+Generate Terraform code for Permit.io that matches the example’s format, naming conventions, and resource structure.
+Write the output to Roles.tf (overwriting if it exists). Abort if there are issues parsing the roles from Roles.md.
 ```
 
 ## Using Terraform
 
 > [!IMPORTANT]
-> Permit.io might give you sample roles and permissions when you create an account. If you don't clear these you, then
-> using Terraform might throw errors with naming conflicts or have other unexpected results. For example, if you get a
-> default "Admin" role, then Terraform might throw a fit about you messing with the "Admin" role.
+> Permit.io often creates sample roles and permissions when you first set up an account.
+> If you don’t delete these before running Terraform, you may run into naming conflicts or unexpected behavior.
+> For example: a preexisting "Admin" role in the dashboard may cause Terraform to fail when trying to create its own "
+> Admin" role.
 
 > [!WARNING]
-> Terraform keeps tracks of the things it created. If you delete stuff in the portal after creating it with Terraform,
-> your local files will be out of sync. You can fix this by removing `.terraform.lock.hcl`, `.terraform` (directory),
-`terraform.tfstate`, `terraform.tfstate.backup`, and then running `terraform init` again.
+> Terraform tracks the resources it creates in state.
+> If you delete a resource directly in the Permit.io dashboard, Terraform’s state will be out of sync.
+> To reset your local state, remove:
+> • .terraform.lock.hcl
+> • .terraform/
+> • terraform.tfstate
+> • terraform.tfstate.backup
+>
+> Then run terraform init again.
 
 1. [Install the Terraform CLI](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli).
+
 2. Export your API key from Permit.io into an environment variable.
     ```sh
     export TF_VAR_PERMITIO_API_KEY="YOUR API KEY HERE"
     ```
-3. Run `terraform init` (this is a one-time step).
-4. Run a dry run using `terraform plan`.
-5. Run `terraform apply` when you're ready to deploy.
+
+3. Run
+   ```sh
+   terraform init
+   ```
+   _(First-time setup for this project)_
+
+4. Preview changes:
+   ```sh
+   terraform plan
+   ```
+
+5. Apply changes:
+   ```sh
+   terraform apply
+   ```
 
 ## TODO
 
@@ -140,7 +170,7 @@ resource "permitio_resource" "billing" {
 ###############################################################################
 
 # Admin: Project (view, edit, delete, manage_members) + Billing (view/pay/manage)
-resource "permitio_role" "adminer" {
+resource "permitio_role" "admin" {
   key         = "admin"
   name        = "Admin"
   description = "Full access to project and billing"
