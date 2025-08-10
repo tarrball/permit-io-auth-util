@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TB.AU.Utility.Auth.Service", "TB.AU.Utility.Auth.Service\TB.AU.Utility.Auth.Service.csproj", "{FC9CB292-CD2C-4F95-9589-B48D79C84CB8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TB.AU.Utility.Auth.Interface", "TB.AU.Utility.Auth.Interface\TB.AU.Utility.Auth.Interface.csproj", "{FE8AC0DE-AD47-4B99-B4E6-CDC6451D2FD3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TB.AU.Utility.Auth.Tests", "TB.AU.Utility.Auth.Tests\TB.AU.Utility.Auth.Tests.csproj", "{BBE41E35-F35B-401B-ABB1-F917C37E7F11}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FC9CB292-CD2C-4F95-9589-B48D79C84CB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC9CB292-CD2C-4F95-9589-B48D79C84CB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC9CB292-CD2C-4F95-9589-B48D79C84CB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC9CB292-CD2C-4F95-9589-B48D79C84CB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE8AC0DE-AD47-4B99-B4E6-CDC6451D2FD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE8AC0DE-AD47-4B99-B4E6-CDC6451D2FD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE8AC0DE-AD47-4B99-B4E6-CDC6451D2FD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE8AC0DE-AD47-4B99-B4E6-CDC6451D2FD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBE41E35-F35B-401B-ABB1-F917C37E7F11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBE41E35-F35B-401B-ABB1-F917C37E7F11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBE41E35-F35B-401B-ABB1-F917C37E7F11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBE41E35-F35B-401B-ABB1-F917C37E7F11}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
