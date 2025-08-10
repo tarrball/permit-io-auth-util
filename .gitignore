@@ -7,6 +7,23 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/Dotnet.gitignore
 
+# Local .terraform directories
+.terraform/
+
+# .tfstate files
+*.tfstate
+*.tfstate.backup
+terraform.tfstate
+terraform.tfstate.backup
+
+# Crash log files
+crash.log
+crash.*.log
+
+# TF vars
+*.tfvars
+*.tfvars.json
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
