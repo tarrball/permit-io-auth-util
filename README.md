@@ -17,13 +17,24 @@ Abort if there are issues parsing the roles from Roles.md.
 
 ## Using Terraform
 
-1. Install Terraform (TODO: how?)
+> [!IMPORTANT]
+> Permit.io might give you sample roles and permissions when you create an account. If you don't clear these you, then
+> using Terraform might throw errors with naming conflicts or have other unexpected results. For example, if you get a
+> default "Admin" role, then Terraform might throw a fit about you messing with the "Admin" role.
+
+> [!WARNING]
+> Terraform keeps tracks of the things it created. If you delete stuff in the portal after creating it with Terraform,
+> your local files will be out of sync. You can fix this by removing `.terraform.lock.hcl`, `.terraform` (directory),
+`terraform.tfstate`, `terraform.tfstate.backup`, and then running `terraform init` again.
+
+1. [Install the Terraform CLI](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli).
 2. Export your API key from Permit.io into an environment variable.
     ```sh
-    export PERMITIO_API_KEY="YOUR API KEY HERE"
+    export TF_VAR_PERMITIO_API_KEY="YOUR API KEY HERE"
     ```
-3. Run a dry run using `terraform plan`.
-4. Run `terraform apply` when you're ready to deploy.
+3. Run `terraform init` (this is a one-time step).
+4. Run a dry run using `terraform plan`.
+5. Run `terraform apply` when you're ready to deploy.
 
 ## TODO
 
@@ -58,14 +69,18 @@ terraform {
   required_providers {
     permitio = {
       source  = "registry.terraform.io/permitio/permit-io"
-      version = "~> 0.0.1"
+      version = "~> 0.0.14"
     }
   }
 }
 
+variable "PERMITIO_API_KEY" {
+  type = string
+}
+
 provider "permitio" {
   api_url = "https://api.permit.io"
-  api_key = env("PERMITIO_API_KEY")
+  api_key = var.PERMITIO_API_KEY
 }
 
 ###############################################################################
@@ -125,27 +140,27 @@ resource "permitio_resource" "billing" {
 ###############################################################################
 
 # Admin: Project (view, edit, delete, manage_members) + Billing (view/pay/manage)
-resource "permitio_role" "admin" {
+resource "permitio_role" "adminer" {
   key         = "admin"
   name        = "Admin"
   description = "Full access to project and billing"
 
   permissions = [
+    # Billing
+    "billing:view_invoices",
+    "billing:pay_invoices",
+    "billing:manage_payment_methods",
     # Project
     "project:view",
     "project:edit",
     "project:delete",
     "project:manage_members",
-    # Billing
-    "billing:view_invoices",
-    "billing:pay_invoices",
-    "billing:manage_payment_methods",
   ]
 
   extends = []
   depends_on = [
-    permitio_resource.project,
-    permitio_resource.billing
+    permitio_resource.billing,
+    permitio_resource.project
   ]
 }
 
