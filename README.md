@@ -66,12 +66,6 @@ Write the output to Roles.tf (overwriting if it exists). Abort if there are issu
    terraform apply
    ```
 
-## TODO
-
-- Example of a using Docker compose to use the local policy-deployment model.
-- Tests.
-- Probably more helpful text in the README.
-
 ## Example: Role Permission Matrix
 
 ### Project Permissions
@@ -229,3 +223,8 @@ resource "permitio_role" "finance" {
   ]
 }
 ```
+
+## TODO
+
+- Example of a using Docker compose to use the local policy-deployment model.
+- Tests.
