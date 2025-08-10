@@ -23,49 +23,33 @@ provider "permitio" {
 # Resources + Actions
 ###############################################################################
 
-# Project Permissions
-resource "permitio_resource" "project" {
-  key         = "project"
-  name        = "Project"
-  description = "Project-scoped operations"
+# Data Operations Resource
+resource "permitio_resource" "data" {
+  key         = "data"
+  name        = "Data"
+  description = "Data operations"
   actions = {
-    view = {
-      name        = "View"
-      description = "View project data"
+    ingest = {
+      name        = "Ingest"
+      description = "Ingest data into the system"
     }
-    edit = {
-      name        = "Edit"
-      description = "Edit project data"
-    }
-    delete = {
-      name        = "Delete"
-      description = "Delete project data"
-    }
-    manage_members = {
-      name        = "Manage Members"
-      description = "Manage project membership"
+    search = {
+      name        = "Search"
+      description = "Search for data in the system"
     }
   }
   attributes = {}
 }
 
-# Billing Permissions
-resource "permitio_resource" "billing" {
-  key         = "billing"
-  name        = "Billing"
-  description = "Billing and payments"
+# Tenant Management Resource
+resource "permitio_resource" "tenant" {
+  key         = "tenant"
+  name        = "Tenant"
+  description = "Tenant management operations"
   actions = {
-    view_invoices = {
-      name        = "View Invoices"
-      description = "View invoices"
-    }
-    pay_invoices = {
-      name        = "Pay Invoices"
-      description = "Pay invoices"
-    }
-    manage_payment_methods = {
-      name        = "Manage Payment Methods"
-      description = "Manage payment methods"
+    create_tenants = {
+      name        = "Create Tenants"
+      description = "Create new tenants in the system"
     }
   }
   attributes = {}
@@ -75,62 +59,53 @@ resource "permitio_resource" "billing" {
 # Roles (permissions are "resource:action")
 ###############################################################################
 
-# Admin: Project (view, edit, delete, manage_members) + Billing (view/pay/manage)
-resource "permitio_role" "adminer" {
-  key         = "admin"
-  name        = "Admin"
-  description = "Full access to project and billing"
+# Agent: Can Ingest data but cannot Search or Create Tenants
+resource "permitio_role" "agent" {
+  key         = "agent"
+  name        = "Agent"
+  description = "Can only ingest data"
 
   permissions = [
-    # Billing
-    "billing:view_invoices",
-    "billing:pay_invoices",
-    "billing:manage_payment_methods",
-    # Project
-    "project:view",
-    "project:edit",
-    "project:delete",
-    "project:manage_members",
+    "data:ingest"
   ]
 
   extends = []
   depends_on = [
-    permitio_resource.billing,
-    permitio_resource.project
+    permitio_resource.data
   ]
 }
 
-# Member: Project (view, edit); no billing permissions
-resource "permitio_role" "member" {
-  key         = "member"
-  name        = "Member"
-  description = "Standard project contributor"
+# System: Full access to all operations (Ingest, Search, Create Tenants)
+resource "permitio_role" "system" {
+  key         = "system"
+  name        = "System"
+  description = "Full system access"
 
   permissions = [
-    "project:view",
-    "project:edit",
+    "data:ingest",
+    "data:search",
+    "tenant:create_tenants"
   ]
 
   extends = []
   depends_on = [
-    permitio_resource.project
+    permitio_resource.data,
+    permitio_resource.tenant
   ]
 }
 
-# Finance: Billing (view/pay/manage); no project permissions
-resource "permitio_role" "finance" {
-  key         = "finance"
-  name        = "Finance"
-  description = "Billing operations access"
+# User: Can only Search, cannot Ingest or Create Tenants
+resource "permitio_role" "user" {
+  key         = "user"
+  name        = "User"
+  description = "Standard user with search access"
 
   permissions = [
-    "billing:view_invoices",
-    "billing:pay_invoices",
-    "billing:manage_payment_methods",
+    "data:search"
   ]
 
   extends = []
   depends_on = [
-    permitio_resource.billing
+    permitio_resource.data
   ]
 }
