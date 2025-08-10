@@ -7,16 +7,24 @@
 
         <IsPackable>false</IsPackable>
         <IsTestProject>true</IsTestProject>
+        <UserSecretsId>AUTH-UTILITY-TESTS-SECRETS</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="DontPanicLabs.CodeAnalysis" Version="1.0.3" />
-        <PackageReference Include="DontPanicLabs.Ifx.Configuration.Contracts" Version="1.0.0" />
-        <PackageReference Include="DontPanicLabs.Ifx.Configuration.Local" Version="1.0.1" />
+        <PackageReference Include="DontPanicLabs.CodeAnalysis" Version="1.0.3"/>
+        <PackageReference Include="DontPanicLabs.Ifx.Configuration.Contracts" Version="1.0.0"/>
+        <PackageReference Include="DontPanicLabs.Ifx.Configuration.Local" Version="1.0.1"/>
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.0"/>
         <PackageReference Include="MSTest.TestAdapter" Version="3.0.4"/>
         <PackageReference Include="MSTest.TestFramework" Version="3.0.4"/>
         <PackageReference Include="coverlet.collector" Version="6.0.0"/>
+        <PackageReference Include="Shouldly" Version="4.3.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Update="appsettings.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
 
 </Project>

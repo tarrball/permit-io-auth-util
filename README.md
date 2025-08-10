@@ -1,10 +1,12 @@
 # Auth Utility using Permit.io
 
+## Purpose
+
 This utility is intended to provide an example implementation of an auth utility that utilizes Permit.io. This README
 includes a sample role matrix and the matching Terraform output as an example. To adapt it, add role matrices to
-Roles.md, and use a coding assistant (e.g., Copilot) to generate the corresponding Terraform based on the provided
-examples. If helpful, add README.md, Roles.md, and Roles.tf, to your Copilot context. Here's an example prompt (assumes
-agentic mode):
+Roles.md, and use a coding assistant (e.g., Copilot) to generate the corresponding Terraform (steps to use Terraform
+listed below) based on the provided examples. If helpful, add README.md, Roles.md, and Roles.tf, to your Copilot
+context. Here's an example prompt (assumes agentic mode):
 
 ```text
 Read the sample role matrix and matching Permit.io Terraform code in README.md.  
@@ -12,6 +14,16 @@ Read the actual role matrix in Roles.md.
 Generate Terraform code for Permit.io that matches the example’s format, naming conventions, and resource structure, then write it to Roles.tf.
 Abort if there are issues parsing the roles from Roles.md.
 ```
+
+## Using Terraform
+
+1. Install Terraform (TODO: how?)
+2. Export your API key from Permit.io into an environment variable.
+    ```sh
+    EXPORT PERMITIO_API_KEY="YOUR API KEY HERE"
+    ```
+3. Run a dry run using `terraform plan`.
+4. Run `terraform apply` when you're ready to deploy.
 
 ## TODO
 
