@@ -20,7 +20,7 @@ Abort if there are issues parsing the roles from Roles.md.
 1. Install Terraform (TODO: how?)
 2. Export your API key from Permit.io into an environment variable.
     ```sh
-    EXPORT PERMITIO_API_KEY="YOUR API KEY HERE"
+    export PERMITIO_API_KEY="YOUR API KEY HERE"
     ```
 3. Run a dry run using `terraform plan`.
 4. Run `terraform apply` when you're ready to deploy.
@@ -64,14 +64,8 @@ terraform {
 }
 
 provider "permitio" {
-  # Or set via PERMITIO_API_URL / PERMITIO_API_KEY env vars
   api_url = "https://api.permit.io"
-  api_key = var.permitio_api_key
-}
-
-variable "permitio_api_key" {
-  type      = string
-  sensitive = true
+  api_key = env("PERMITIO_API_KEY")
 }
 
 ###############################################################################
